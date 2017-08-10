@@ -1,6 +1,6 @@
 ## Welcome to breakingstuff's page containing jobfinder.dk rss feed reader.
 
-```
+```php
 <?php
    $rss = new DOMDocument();
    $rss->load('https://www.jobfinder.dk/jobsrss/');
