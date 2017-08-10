@@ -30,7 +30,6 @@
       $description = $feed[$x]['desc'];
       echo '<p><b><a href="'.$link.'" target="_blank">'.$title.'</a></b></p>';
       echo '<p>'.$description.'</p>';
-      echo '<p><strong><em>'.$creator.'</em></strong></p>';
    }
 ?>
 </div>
