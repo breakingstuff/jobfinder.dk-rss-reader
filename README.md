@@ -20,13 +20,14 @@
       $description = $feed[$x]['desc'];
       echo '<p><b><a href="'.$link.'" target="_blank">'.$title.'</a></b></p>';
       echo '<p>'.$description.'</p>';
-      echo '<p><strong><em>'.$creator.'</em></strong></p>';
    }
 ?>
 ```
-You can use the [editor on GitHub](https://github.com/breakingstuff/jobfinder.dk-rss-reader/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+The PHP script creates a $rss variable that calls a new DOMDocument() and then uses the loads() function to define the url to the job site. $feed variable then creates and array() function passed to a $item variable containing the DOM objects to read: title, description, link. 
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+Then pushes the $feed variable into $item merging the array() function with the defined values. We then set a limit of max 60 entries and do a for() function where we define variable $x and append as long as $x is lower value than $limit variable. 
+
+Now we define the variable $title using str_replace() to remove make the output much more clean. $link variable defines the link to the job posting. $description variable contains a short description about the job position. Now we echo the output in two lines, merging the $title and $link variables so the title acts as a link. 
 
 ### Markdown
 
