@@ -40,30 +40,44 @@ Now we define the variable $title using str_replace() to remove start of a chara
 By using Bootstrap CDN we make the output much cleaner. Include the lines in your header section.
 To make it centered output use the ```html <div class="container">(PHP CODE GOES HERE)</div>```
 
-markdown
-Syntax highlighted code block
+# Full Code
+```php
+<html>
+<head>
+<title>Ledige Stillinger</title>
 
-# Header 1
-## Header 2
-### Header 3
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
 
-- Bulleted
-- List
+<?php
 
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+   $rss = new DOMDocument();
+   $rss->load('https://www.jobfinder.dk/jobsrss/');
+   $feed = array();
+   foreach ($rss->getElementsByTagName('item') as $node) {
+      $item = array(
+                'title' => $node->getElementsByTagName('title')->item(0)->nodeValue,
+                'desc' => $node->getElementsByTagName('description')->item(0)->nodeValue,
+                'link' => $node->getElementsByTagName('link')->item(0)->nodeValue,
+                );
+      array_push($feed, $item);
+   }
+   $limit = 60;
+   for($x=0;$x<$limit;$x++) {
+      $title = str_replace(' & ', '&amp; ', $feed[$x]['title']);
+      $link = $feed[$x]['link'];
+      $description = $feed[$x]['desc'];
+      echo '<p><b><a href="'.$link.'" target="_blank">'.$title.'</a></b></p>';
+      echo '<p>'.$description.'</p>';
+      echo '<p><strong><em>'.$creator.'</em></strong></p>';
+   }
+?>
+</div>
+</body>
+</html>
 ```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/breakingstuff/jobfinder.dk-rss-reader/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
