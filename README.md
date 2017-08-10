@@ -1,5 +1,29 @@
 ## Welcome to breakingstuff's page containing jobfinder.dk rss feed reader.
 
+```
+<?php
+   $rss = new DOMDocument();
+   $rss->load('https://www.jobfinder.dk/jobsrss/');
+   $feed = array();
+   foreach ($rss->getElementsByTagName('item') as $node) {
+      $item = array(
+                'title' => $node->getElementsByTagName('title')->item(0)->nodeValue,
+                'desc' => $node->getElementsByTagName('description')->item(0)->nodeValue,
+                'link' => $node->getElementsByTagName('link')->item(0)->nodeValue,
+                );
+      array_push($feed, $item);
+   }
+   $limit = 60;
+   for($x=0;$x<$limit;$x++) {
+      $title = str_replace(' & ', '&amp; ', $feed[$x]['title']);
+      $link = $feed[$x]['link'];
+      $description = $feed[$x]['desc'];
+      echo '<p><b><a href="'.$link.'" target="_blank">'.$title.'</a></b></p>';
+      echo '<p>'.$description.'</p>';
+      echo '<p><strong><em>'.$creator.'</em></strong></p>';
+   }
+?>
+```
 You can use the [editor on GitHub](https://github.com/breakingstuff/jobfinder.dk-rss-reader/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
 
 Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
